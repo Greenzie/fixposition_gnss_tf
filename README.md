@@ -12,23 +12,47 @@ This is a simple C++ library for geodetic coordinate transformations. This shoul
 
 -  [Eigen3](https://eigen.tuxfamily.org/index.php?title=Main_Page), tested with version [3.3.7](https://gitlab.com/libeigen/eigen/-/releases/3.3.7)
 -  [CMake](https://cmake.org/)
--  [Catkin](http://wiki.ros.org/catkin)
+-  [Yaml-Cpp](https://yaml-cpp.docsforge.com/)
 
 For the tests:
 
 -  [Googletest](https://github.com/google/googletest)
 
+Build system:
+- Plain CMake
+- catkin (for ROS1)
+- colcon (for ROS2)
+## Installing dependencies on Ubuntu system
+
+```
+ sudo apt update
+ sudo apt install -y wget
+ wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+ sudo apt-get update
+ sudo apt install -y build-essential cmake
+ sudo apt install -y libeigen3-dev
+ sudo apt install -y libyaml-cpp-dev
+```
+
+if you also want to run the unit-tests:
+```
+ sudo apt-get install libgtest-dev
+ cd /usr/src/gtest
+ sudo cmake .
+ sudo make
+ sudo make install
+ ```
+
 ## Build
 
-### Using [catkin_tools](https://catkin-tools.readthedocs.io/en/latest/) (_recommended_):
-
--  Create a catkin workspace with the structure:
+### Using catkin (ROS1):
+-  Create a ament workspace with the structure:
 
 ```
 catkin_ws
 └── src
-    └── gnsstransformationlib
-    └── <Other Catkin Pacakges>
+    └── fixposition_gnss_tf
+    └── <Other Pacakges>
 ```
 
 -  in the workspace do:
@@ -36,14 +60,54 @@ catkin_ws
 ```bash
 catkin build fixposition_gnss_tf
 ```
+- and to build and run unit tests
+
+```bash
+catkin build fixposition_gnss_tf -DBUILD_TESTING=ON
+catkin run_tests fixposition_gnss_tf
+```
+
+### Using colcon (ROS2):
+-  Create a ament workspace with the structure:
+
+```
+ament_ws
+└── src
+    └── fixposition_gnss_tf
+    └── <Other Pacakges>
+```
+
+-  in the workspace do:
+
+```bash
+colcon build --packages-select fixposition_gnss_tf
+```
+- and to build and run unit tests
+
+```bash
+# build with testing enabled
+colcon build --packages-select fixposition_gnss_tf --cmake-args -DBUILD_TESTING=ON
+# run the tests
+colcon test --packages-select fixposition_gnss_tf
+# check the results
+colcon test-result --test-result-base build/fixposition_gnss_tf/
+```
 
 ### Using CMake:
-
+- setup build directory
 ```bash
 mkdir build
 cd build
+```
+- build without unit tests
+```
 cmake ..
 make
+```
+- build and run unit tests
+```bash
+cmake .. -DBUILD_TESTING=ON
+make test
 ```
 
 ## Example Usage
