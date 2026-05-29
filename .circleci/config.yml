@@ -16,12 +16,14 @@ workflows:
       # Build jobs
       - greenzie/debian_build:
           name: "amd_debian_build"
+          context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
           clone_submodules: false
 
       - greenzie/debian_build:
           name: "arm64_debian_build"
+          context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
           clone_submodules: false
@@ -66,11 +68,13 @@ workflows:
       # Build jobs
       - greenzie/debian_build:
           name: "amd_debian_build"
+          context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
 
       - greenzie/debian_build:
           name: "arm64_debian_build"
+          context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
 
