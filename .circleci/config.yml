@@ -19,14 +19,14 @@ workflows:
           context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
-          generate_changelog: false
+          generate_changelog: true
 
       - greenzie/debian_build_simple:
           name: "arm64_debian_build"
           context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
-          generate_changelog: false
+          generate_changelog: true
 
       # Deployment jobs
       - greenzie/debian_deploy_experimental:
@@ -61,14 +61,14 @@ workflows:
           context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
-          generate_changelog: false
+          generate_changelog: true
 
       - greenzie/debian_build_simple:
           name: "arm64_debian_build"
           context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
-          generate_changelog: false
+          generate_changelog: true
 
       - greenzie/debian_deploy_experimental:
           context: GREENZIE
