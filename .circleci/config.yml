@@ -14,23 +14,23 @@ workflows:
     unless: << pipeline.parameters.manual-bobcat-deploy >>
     jobs:
       # Build jobs
-      - greenzie/debian_build:
+      - greenzie/debian_build_simple:
           name: "amd_debian_build"
           context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
-          clone_submodules: false
+          generate_changelog: false
 
-      - greenzie/debian_build:
+      - greenzie/debian_build_simple:
           name: "arm64_debian_build"
           context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
-          clone_submodules: false
+          generate_changelog: false
 
       # Deployment jobs
       - greenzie/debian_deploy_experimental:
-          name: "deploy_amd64_greenzie"
+          name: "deploy_all_greenzie"
           context: GREENZIE
           filters:
             branches:
@@ -38,16 +38,6 @@ workflows:
                 - noetic
           requires:
             - amd_debian_build
-
-      - greenzie/debian_deploy_experimental:
-          name: "deploy_arm64_greenzie"
-          context: GREENZIE
-          architecture: arm64
-          filters:
-            branches:
-              only:
-                - noetic
-          requires:
             - arm64_debian_build
 
       - greenzie/debian_deploy_experimental:
@@ -66,17 +56,19 @@ workflows:
     when: << pipeline.parameters.manual-bobcat-deploy >>
     jobs:
       # Build jobs
-      - greenzie/debian_build:
+      - greenzie/debian_build_simple:
           name: "amd_debian_build"
           context: GREENZIE
           platform: amd64
           executor: greenzie/debianize_amd64
+          generate_changelog: false
 
-      - greenzie/debian_build:
+      - greenzie/debian_build_simple:
           name: "arm64_debian_build"
           context: GREENZIE
           platform: arm64
           executor: greenzie/debianize_arm64
+          generate_changelog: false
 
       - greenzie/debian_deploy_experimental:
           context: GREENZIE
