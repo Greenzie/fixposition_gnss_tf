@@ -1,3 +1,5 @@
+> **DEPRECATED:** This fork is no longer actively maintained by Greenzie.
+
 # Fixposition GNSS Transformation Lib
 
 `fixposition_gnss_tf`
